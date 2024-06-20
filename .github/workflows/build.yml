@@ -8,8 +8,6 @@ on:
   pull_request:
     branches:
       - main
-  schedule:
-    - cron: 0 1 * * 1
   workflow_dispatch:
 permissions:
   contents: write
@@ -19,7 +17,7 @@ jobs:
   commitlint:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: '{{ "${{ secrets.GITHUB_TOKEN }}" }}'
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
       - uses: actions/checkout@v4
         with:
