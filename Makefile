@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DOCKER_REPO ?= ghcr.io/mrsimonemms/devcontainers
+DOCKER_REPO ?= ghcr.io/kubefirst/devcontainers
 IMG_DIR = images
 PLATFORM ?= linux/amd64
 
@@ -42,14 +42,6 @@ build-images:
 		$(MAKE) build IMG_NAME="$${name}" CONTEXT="$${img_path}"; \
 	done
 .PHONY: build-images
-
-cruft-update:
-ifeq (,$(wildcard .cruft.json))
-	@echo "Cruft not configured"
-else
-	@cruft check || cruft update --skip-apply-ask --refresh-private-variables
-endif
-.PHONY: cruft-update
 
 install-devcontainers:
 	@if ! command devcontainer --version; then \
