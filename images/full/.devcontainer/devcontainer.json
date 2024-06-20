@@ -1,0 +1,30 @@
+{
+  "name": "full",
+  "image": "ghcr.io/kubefirst/devcontainers/base",
+  "features": {
+    "ghcr.io/devcontainers/features/go:1": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "minikube": "none"
+    },
+    "ghcr.io/devcontainers-contrib/features/kubectx-kubens:1": {},
+    "ghcr.io/rio/features/k9s:1": {},
+    "ghcr.io/devcontainers-contrib/features/mkcert:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "HashiCorp.HCL"
+      ]
+    }
+  },
+  "postCreateCommand": {
+    "helm-completion": "helm completion bash | sudo tee -a /etc/bash_completion.d/helm > /dev/null",
+    "pre-commit": "pre-commit install --install-hooks -t pre-commit -t commit-msg || true"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/mrsimonemms/devcontainers/full",
+  "image": "ghcr.io/kubefirst/devcontainers/full",
   "name": "devcontainer",
   "features": {},
   "customizations": {
