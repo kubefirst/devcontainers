@@ -9,6 +9,9 @@ Pre-build [Development Containers](https://containers.dev/)
   * [Base](#base)
   * [Full](#full)
 * [Usage](#usage)
+  * [Adding new features](#adding-new-features)
+  * [Lifecycle scripts](#lifecycle-scripts)
+  * [It's just Docker](#its-just-docker)
 * [Contributing](#contributing)
   * [Open in a container](#open-in-a-container)
 
@@ -18,11 +21,16 @@ Pre-build [Development Containers](https://containers.dev/)
 
 ## Purpose
 
-This is a series of pre-built Devcontainer image to allow local development.
+This is a series of pre-built Dev Container images to enable local development.
+This allows us to ship the development environment as part of our source code,
+meaning that we can onboard new developers quickly and open-source contributors
+can get working really quickly.
 
 ## Images
 
-There are a number of images that exist.
+There are a number of images that exist and each have slightly different purposes.
+These images are rebuilt weekly to ensure that they have all the latest-and-greatest
+bugfixes and improvements.
 
 ### Base
 
@@ -37,7 +45,7 @@ Docker support, tab-completion and useful Git aliases.
 
 > `ghcr.io/kubefirst/devcontainers/full`
 
-An image with some modern tooling installed.
+An image with the main Kubefirst tooling installed.
 
 * [Go](https://github.com/devcontainers/features/tree/main/src/go) ✅
 * [Homebrew](https://github.com/meaningful-ooo/devcontainer-features/tree/main/src/homebrew)
@@ -70,13 +78,54 @@ this would be by specifying the `image` in your `devcontainer.json` file:
 ```json
 {
   "name": "devcontainer",
-  "image": "ghcr.io/kubefirst/devcontainers/full"
+  "image": "ghcr.io/kubefirst/devcontainers/full",
+  "features": {}
 }
 ```
 
-As this image is pre-built, it will vastly speed up your workflow. Additional
-features can be found on the [Dev Container Features](https://containers.dev/features)
+As this image is pre-built, it will vastly speed up your workflow. The recommended
+workflow is to pull the image separately (eg, `docker pull ghcr.io/kubefirst/devcontainers/full`),
+but it is not a requirement.
+
+### Adding new features
+
+Sometimes, this will be used in a project and a feature is required just for
+that. You can easily add additional languages or tooling to your Dev Container
+by adding to your `features` object. For example, if you wanted to add Rust to
+your container, all you have to do is add:
+
+```json
+{
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {}
+  }
+}
+```
+
+Additional features can be found on the [Dev Container Features](https://containers.dev/features)
 page.
+
+### Lifecycle scripts
+
+You can also use the [lifecycle scripts](https://containers.dev/implementors/json_reference/#lifecycle-scripts)
+to run arbitrary commands when your container is run:
+
+```json
+{
+  "postAttachCommand": {
+    "mkcertInstall": "mkcert -install"
+  }
+}
+```
+
+You are advised to use the object notation for the lifecycle scripts so that additional
+scripts may be added in future.
+
+### It's just Docker
+
+Ultimately, Dev Containers are just Docker containers run in a way that your IDE
+is able to manage. If you wish to connect to the container via your terminal,
+simply running `docker exec -it -n <container-id>` will get you in there.
 
 ## Contributing
 
