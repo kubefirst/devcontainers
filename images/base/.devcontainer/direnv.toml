@@ -1,0 +1,6 @@
+# Documentation
+# @link https://direnv.net/man/direnv.toml.1.html
+
+[whitelist]
+# Automatically apply all .envrc files under /workspaces
+prefix = ["/workspaces"]
